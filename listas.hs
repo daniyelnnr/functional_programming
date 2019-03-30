@@ -47,16 +47,6 @@ isPalindrome xs = if xs == rev xs then True else False
 - Remove os elementos duplicados de uma lista. Ex: compress [2,5,8,2,1,8] = [2,5,8,1]
 - Voce pode usar a funcao elem de Haskell
 -}
-{-
-removeElem e [] = []
-removeElem e xs = filter (\n -> n /= e) xs
-compress xs = compress' xs
-compress' [] = []
-compress' (x:xs)
-  | x == head xs = removeElem
-  x == head xs = compress (x ++ tail xs)
-  | otherwise = compress (x:xs)
--}
 compress [] = []
 compress xs
   | elem (last xs) (init xs) = compress (init xs)
@@ -69,3 +59,8 @@ compress xs
 compact [] = []
 compact xs
   | elem (last xs) (init xs) = compact (init xs)
+
+shiftLast [] = []
+shiftLast xs
+  | length xs > 2 && elem (last xs) (init xs) && last xs /= last (init xs) = shiftLast(init (init xs) ++ [last xs]) ++ [last (init xs)] 
+  | otherwise = xs
