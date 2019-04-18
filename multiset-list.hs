@@ -42,35 +42,16 @@ mslsearch elem ((x,y):xs)
 {-
  - Faz a uniao deste Bag com otherBag. A uniao consiste em ter os elementos dos dois Bags com suas maiores quantidades.
  - Por exemplo, A = [('a',1),('c',3)], B = [('b',2),('c',1)]. A.union(B) deixa A = [(a,1),(c,3),(b,2)]
- - (x:xs) ++ (y:ys)
- 
- - testar outro elemento alem do primeiro elemento do bag1
- - testar se elemento ja existe no outro bag
- - mslunion [('b',1)] [('b',1),('a',2)]
- - mslunion [('a',1),('d',4)] [('b',1)]
- - [('a', searched)]
 
- --*MultisetList> mslunion [('a',1),('d',4)] [('b',1)]
-[('a',1),('d',4),('b',1)]
-*MultisetList> mslunion [('b',1)] [('b',1),('a',2)]
-[('a',1)]
-*MultisetList> mslunion [('b',1)] [('b',2),('a',2)]
-[('a',1)]
-*MultisetList> mslunion [('b',2)] [('b',1),('a',2)]
-[('a',2)]
+ - mslunion [('a',4),('b',1)] [('d',3),('b',2),('a',2)]
 -}
--- mslunion bag1 [] = bag1
--- mslunion (x:xs) (y:ys)
---   | searched >= snd (head merged) = mslunion (tail merged) []
---   | otherwise = 
---   where merged = (x:xs) ++ (y:ys)
---         searched = mslsearch (fst (head merged)) (tail merged)
 
 mslunion bag1 [] = bag1
 mslunion (x:xs) (y:ys)
   | searched == 0 = mslunion ((x:xs) ++ [y]) ys
-  | otherwise = if searched >= (snd y) then mslunion ((x:xs) ++ [y]) ys else mslunion xs 
+  | otherwise = if searched >= (snd y) then mslunion (x:xs) ys else mslunion ((filter (\elem -> (fst elem) /= (fst y)) (x:xs)) ++ [y]) ys
   where searched = mslsearch (fst y) (x:xs)
+
 {-
  - Faz a intersecao deste Bag com otherBag. A intersecao consiste em ter os elementos que estao em ambos os bags com suas 
  - menores quantidades. Por exemplo, Seja A = {(a,3),(b,1)} e B = {(a,1)}. Assim, A.intersection(B) deixa A = {(a,1)}
