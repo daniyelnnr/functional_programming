@@ -56,8 +56,16 @@ mslunion (x:xs) (y:ys)
  - Faz a intersecao deste Bag com otherBag. A intersecao consiste em ter os elementos que estao em ambos os bags com suas 
  - menores quantidades. Por exemplo, Seja A = {(a,3),(b,1)} e B = {(a,1)}. Assim, A.intersection(B) deixa A = {(a,1)}
  - Caso senhum elemento de A esteja contido em B ent�o a intersecao deixa A vazio.
+
+ A = {(a,1),(b,1)} e B = {(a,3)}
+ mslintersection [('a',4),('b',1)] [('d',3),('b',2),('a',2)]
+ mslintersection [('a',3),('b',1)] [('a',1)]
 -}
-intersection bag1 bag2 = undefined
+mslintersection bag1 [] = []
+mslintersection bag1 (y:ys)
+  | searched == 0 = mslintersection bag1 ys
+  | otherwise = if snd y <= searched then (mslintersection (filter (\elem -> fst elem /= fst y) bag1) ys) ++ [y] else (mslintersection (filter (\elem -> fst elem /= fst y) bag1) ys) ++ [(fst y, searched)]
+  where searched = mslsearch (fst y) bag1
 
 {-
  - Faz a diferenca deste Bag com otherBag. A diferenca A \ B entre bags eh definida como segue:
