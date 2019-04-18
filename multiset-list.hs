@@ -82,4 +82,5 @@ sum bag1 bag2 = undefined
 {-
  - Retorna a quantidade total de elementos no Bag
 -}
-size bag = undefined
+mslsize [] = 0
+mslsize (x:xs) = 1 + mslsize xs
