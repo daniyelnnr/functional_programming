@@ -73,8 +73,16 @@ mslintersection bag1 (y:ys)
    - contem os elementos x de A que estao em B mas com sua quantidade subtraida (qtde em A - qtde em B). 
      Caso essa quantidade seja negativa o elemento deve serremovido do Bag. 
      Por exemplo, seja A = {(a,3),(b,1)} e B = {(b,2),(a,1)}. Assim, A.minus(B) deixa A = {(a,2)}.
+     
+     minus [('a',3),('b',1)] [('b',2),('c',4)]
+     minus [('a',3),('b',5)] [('b',2),('c',4),('a',1)]
 -}
-minus bag1 bag2 = undefined
+minus bag1 [] = bag1
+minus [] bag2 = []
+minus bag1 (y:ys)
+  | searched == 0 = minus bag1 ys
+  | otherwise = if searched <= snd y then minus (filter (\elem -> fst elem /= fst y) bag1) ys else minus (map (\elem -> if (fst elem) /= (fst y) then (elem) else (fst elem, (snd elem)-(snd y))) bag1) ys
+  where searched = mslsearch (fst y) bag1
 
 {-
  - Testa se este Bag esta incluso em otherBag. Para todo elemento deste bag, sua quantidade
