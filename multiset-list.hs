@@ -87,8 +87,16 @@ minus bag1 (y:ys)
 {-
  - Testa se este Bag esta incluso em otherBag. Para todo elemento deste bag, sua quantidade
  - deve ser menor or igual a sua quantidade em otherBag.
+
+ inclusion [('a',3),('b',5)] [('b',2),('c',4),('a',5)]
+ inclusion [('a',3),('b',1)] [('b',2),('c',4),('a',5)]
 -}
-inclusion bag1 bag2 = undefined
+inclusion bag1 [] = False
+inclusion [] bag2 = True
+inclusion (x:xs) bag2
+  | searched == 0 = False
+  | otherwise = if snd x <= searched then inclusion xs bag2 else False
+  where searched = mslsearch (fst x) bag2
 
 {-
  - Realiza a soma deste Bag com otherBag. A soma de dois bags contem os elementos dos dois bags com suas quantidades somadas. 
