@@ -100,8 +100,14 @@ inclusion (x:xs) bag2
 
 {-
  - Realiza a soma deste Bag com otherBag. A soma de dois bags contem os elementos dos dois bags com suas quantidades somadas. 
+
+ mslsum [('a',3),('b',1)] [('b',2),('c',4),('a',5)]
 -}
-sum bag1 bag2 = undefined
+mslsum bag1 [] = bag1
+mslsum bag1 (y:ys)
+  | searched == 0 = mslsum bag1 ys ++ [y]
+  | otherwise = mslsum (map (\elem -> if (fst elem) /= (fst y) then (elem) else (fst elem, (snd elem)+(snd y))) bag1) ys
+  where searched = mslsearch (fst y) bag1
 
 {-
  - Retorna a quantidade total de elementos no Bag
