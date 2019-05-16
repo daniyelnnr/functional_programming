@@ -85,13 +85,21 @@ insert x (Node a left right)
   | otherwise = Node x left right
 
 --retorna o Node da BST contendo o dado procurado ou entao NIL
-search = undefined
+search x NIL = NIL
+search x (Node a left right)
+  | x == a = Node a left right
+  | x < a = search a left
+  | x > a = search a right
 
 --retorna o elmento maximo da BST
-maximum = undefined
+maxBST NIL = -1
+maxBST (Node a NIL NIL) = a
+maxBST (Node a _ right) = maxBST right
 
 --retorna o elemento minimo da BST
-minimum = undefined
+minBST NIL = -1
+minBST (Node a NIL NIL) = a
+minBST (Node a left _) = minBST left
 
 --retorna o predecessor de um elemento da BST, caso o elemento esteja na BST
 predecessor = undefined
