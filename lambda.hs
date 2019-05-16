@@ -24,9 +24,9 @@ goldbach x = undefined
 
 --Implemente as funções sobre listas escritas previsamente usando expressões lambda
 --consulte suas implementacoes anteriores para a documentacao dessas funcoes
-meuLast = \xs -> if null xs then error "Lista vazia!" else xs ++ []
+meuLast = \xs -> if null xs then error "Lista vazia!" else if (length xs == 1) then (head xs) else meuLast (tail xs)
 
-penultimo xs = undefined
+penultimo = \xs -> if null xs then error "Lista sem penultimo" else if (meuLast (xs) == (head xs)) then error "Lista sem penultimo" else meuLast (init xs)
 
 elementAt i xs = undefined
 
