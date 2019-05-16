@@ -78,7 +78,11 @@ isBST (Node a left right)
   | otherwise = isBST left && isBST right
 
 --insere uma nova chave na BST retornando a BST modificada
-insert = undefined
+insert x NIL = Node x NIL NIL
+insert x (Node a left right)
+  | x < a = Node a (insert x left) right
+  | x > a = Node a left (insert x right)
+  | otherwise = Node x left right
 
 --retorna o Node da BST contendo o dado procurado ou entao NIL
 search = undefined
