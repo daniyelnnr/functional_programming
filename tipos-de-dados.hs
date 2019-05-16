@@ -62,11 +62,20 @@ listFoldl f v (Cons x xs) = listFoldl f (f v x) xs
 --Node 5 (Node 1 NIL NIL) (Node 3 NIL NIL)
 data BinaryTree a = NIL | Node a (BinaryTree a) (BinaryTree a) deriving (Eq,Show)
 
+value NIL = 0
+value (Node a left right) = a
+
+-- Size of a tree is the number of elements present in the tree
 sizeBST NIL = 0
 sizeBST (Node a left right) = 1 + sizeBST left + sizeBST right
 
 --verifica se uma BT é uma BST
-isBST = undefined
+isBST NIL = True
+isBST (Node _ NIL NIL) = True
+isBST (Node a left right)
+  | a < value left = False
+  | a > value right = False
+  | otherwise = isBST left && isBST right
 
 --insere uma nova chave na BST retornando a BST modificada
 insert = undefined
