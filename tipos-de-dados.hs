@@ -116,9 +116,9 @@ toList (Node a left right) = (toList left) ++ [a] ++ (toList right)
 
 --retorna o predecessor de um elemento da BST, caso o elemento esteja na BST
 predecessor x NIL = error "Nao existe predecessor"
-predecessor x (Node a NIL NIL) = error "Nao existe predecessor"
+predecessor x (Node a NIL NIL) = error "Nao existe predecessor para esse elemento"
 predecessor x bst
-  | x == minBST bst = error "Nao existe predecessor"
+  | x == minBST bst = error "Nao existe predecessor para esse elemento"
   | isElem x bst == False = error "Elemento nao esta na BST"
   | otherwise = search (predecessorAux x (toList bst)) bst
 
@@ -128,7 +128,16 @@ predecessorAux elem (x:xs)
   | otherwise = predecessorAux elem xs
 
 --retorna o sucessor de um elemento da BST, caso o elemento esteja na BST
-successor = undefined
+successor x NIL = error "Nao existe sucessor"
+successor x (Node a NIL NIL) = error "Nao existe sucessor para esse elemento"
+successor x bst
+  | x == maxBST bst = error "Nao existe sucessor para esse elemento"
+  | isElem x bst == False = error "Elemento nao esta na BST"
+  | otherwise = search (successorAux x (reverse (toList bst))) bst
+
+successorAux elem (x:xs)
+  | (not (null xs)) && (elem == head xs) = x
+  | otherwise = successorAux elem xs
 
 --remove ume lemento da BST
 remove = undefined
