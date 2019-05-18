@@ -86,10 +86,13 @@ insert x (Node a left right)
 
 --retorna o Node da BST contendo o dado procurado ou entao NIL
 search x NIL = NIL
+search x (Node a NIL NIL)
+  | x == a = Node a NIL NIL
+  | otherwise = NIL
 search x (Node a left right)
   | x == a = Node a left right
-  | x < a = search a left
-  | x > a = search a right
+  | x < a = search x left
+  | x > a = search x right
 
 --retorna o elmento maximo da BST
 maxBST NIL = -1
@@ -101,8 +104,28 @@ minBST NIL = -1
 minBST (Node a NIL NIL) = a
 minBST (Node a left _) = minBST left
 
+--check elem is in BST
+isElem x NIL = False
+isElem x bst = value (search x bst) == x
+
+toList NIL = []
+toList (Node a left right) = (toList left) ++ [a] ++ (toList right)
+
+-- let b = (Node 5 (Node 3 (Node 1 NIL NIL) (Node 4 NIL NIL)) (Node 7 (Node 6 NIL NIL) (Node 8 NIL NIL)))
+-- let bst = (Node 15 (Node 6 (Node 3 (Node 2 NIL NIL) (Node 4 NIL NIL)) (Node 7 NIL (Node 13 (Node 9 NIL NIL) NIL))) (Node 20 NIL NIL))
+
 --retorna o predecessor de um elemento da BST, caso o elemento esteja na BST
-predecessor = undefined
+predecessor x NIL = error "Nao existe predecessor"
+predecessor x (Node a NIL NIL) = error "Nao existe predecessor"
+predecessor x bst
+  | x == minBST bst = error "Nao existe predecessor"
+  | isElem x bst == False = error "Elemento nao esta na BST"
+  | otherwise = search (predecessorAux x (toList bst)) bst
+
+-- retorna key do node predecessor
+predecessorAux elem (x:xs)
+  | (not (null xs)) && (elem == head xs) = x
+  | otherwise = predecessorAux elem xs
 
 --retorna o sucessor de um elemento da BST, caso o elemento esteja na BST
 successor = undefined
@@ -114,3 +137,10 @@ remove = undefined
 preOrder = undefined
 order = undefined
 postOrder = undefined
+
+nodeParent e NIL = NIL
+nodeParent e (Node a left right)
+  | isElem e (Node a left right) == False = NIL
+  | e == a = NIL
+  | e == (value left) || e == (value right) = Node a left right
+  | otherwise = if e < a then nodeParent e left else nodeParent e right
