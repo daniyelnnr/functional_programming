@@ -156,9 +156,13 @@ remove x (Node a left right)
   where succ = value (successor x (Node a left right))
 
 --retorna uma lista com os dados da BST nos diversos tipos de caminhamento
-preOrder = undefined
-order = undefined
-postOrder = undefined
+preOrder NIL = []
+preOrder (Node a left right) = [a] ++ (preOrder left) ++ (preOrder right)
+
+order = toList
+
+postOrder NIL = []
+postOrder (Node a left right) = (postOrder left) ++ (postOrder right) ++ [a]
 
 nodeParent e NIL = NIL
 nodeParent e (Node a left right)
