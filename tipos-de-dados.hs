@@ -139,8 +139,21 @@ successorAux elem (x:xs)
   | (not (null xs)) && (elem == head xs) = x
   | otherwise = successorAux elem xs
 
---remove ume lemento da BST
-remove = undefined
+isLeaf (Node a NIL NIL) = True
+isLeaf (Node a _ _) = False
+
+-- Node 12 (Node 10 (Node 9 NIL NIL) (Node 11 NIL NIL)) (Node 14 (Node 13 NIL NIL) (Node 15 NIL NIL))
+-- Node 14 (Node 13 NIL NIL) (Node 15 NIL NIL)
+
+--remove ume elemento da BST
+remove x NIL = error "Nao eh possivel remover"
+remove x (Node a left right)
+  | x == a && isLeaf (Node a left right) = NIL
+  | x == (value right) && isLeaf right = Node a left NIL
+  | x == a && right == NIL = left
+  | x == a = Node (succ) left (remove succ right)
+  | otherwise = if x < a then Node a (remove x left) right else Node a left (remove x right)
+  where succ = value (successor x (Node a left right))
 
 --retorna uma lista com os dados da BST nos diversos tipos de caminhamento
 preOrder = undefined
